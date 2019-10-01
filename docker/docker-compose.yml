@@ -1,0 +1,33 @@
+version: '3'
+services:
+
+  php:
+    build:
+      context: .
+      dockerfile: php-dockerfile
+    container_name: php
+    depends_on:
+      - mysql
+    volumes:
+      - '../src:/code'
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+
+  mysql:
+    image: mysql:5
+    container_name: database
+    expose:
+    - 3306
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+    volumes:
+      - "./data/db:/var/lib/mysql"
+
+
+
